@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>موقع احترافي</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<input type="checkbox" id="dark-toggle">
+<label for="dark-toggle" class="dark-btn">🌙</label>
+
+<header class="navbar">
+    <img src="images/logo.PNG" alt="HEEMO Logo" class="pulse-logo">
+    <nav>
+        <a href="#"></a>
+        <a href="#services">ارحب</a>
+        <a href="#contact"></a>
+    </nav>
+</header>
+ <section class="video-section">
+    <h1 class="section-title">شروحات التصميم</h1>
+    <p class="section-subtitle">أول مقطع</p>
+
+    <div class="video-container">
+        <div class="video-card" onclick="openModal()">
+            <img src="images/v1.JPEG" alt="شرح HTML">
+            <div class="play-overlay">▶</div>
+        </div>
+    </div>
+</section>
+<div id="videoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <iframe id="videoPlayer" src="https://www.youtube.com/watch?v=YhH-FE5Y0MQ" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById("videoModal").style.display = "flex";
+    }
+    function closeModal() {
+        document.getElementById("videoModal").style.display = "none";
+        // إيقاف الفيديو
+        var iframe = document.getElementById("videoPlayer");
+        var url = iframe.src;
+        iframe.src = url;
+    }
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("videoModal")) { closeModal(); }
+    }
+    
+</script>
+
+</div>
+
+
+
+
+<footer>
+    <p> تم تصميم هذا الموقع التجريبي من قبل ابراهيم رضوان عبر لغة html وcss</p>
+</footer>
+
+</body>
+</html>
+
