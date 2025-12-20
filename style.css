@@ -497,3 +497,7 @@ h2 {
     transform: translateY(-3px);
     
 }
+
+:root {
+    --apple-icon: url('./images/app-icon.png');
+}
