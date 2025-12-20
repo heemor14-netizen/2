@@ -3,9 +3,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>موقع احترافي</title>
+    <title>الرئيسية</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -21,11 +22,33 @@
 </header>
 
 <section class="hero">
-    <h1>صمّم موقعك باحتراف</h1>
-    <p>موقع أنيق، سريع، ومتجاوب</p>
-    <a href="join.html" class="btn-start">ابدأ الآن</a>
-</section>
+    <div id="box1">
+        <h1>صمم موقعك باحتراف</h1>
+        <p>موقع أنيق، سريع، ومتجاوب</p>
+        <button class="btn-start" onclick="document.getElementById('box1').style.display='none'; document.getElementById('box2').style.display='block';">
+            ابدأ الآن
+        </button>
+    </div>
 
+    <div id="box2" style="display: none;">
+    <h1>اختر القسم</h1>
+    <p></p>
+    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+        
+        <a href="join.html" class="btn-start" style="background: #ffffff; border: none; text-decoration: none;">
+            <i class="fab fa-youtube"></i> مقاطع الشرح
+        </a>
+
+        <a href="quizzes.html" class="btn-start" style="text-decoration: none;">
+            <i class="fas fa-edit"></i> الاختبارات
+        </a>
+    </div>
+    
+    <p onclick="document.getElementById('box2').style.display='none'; document.getElementById('box1').style.display='block';" style="cursor:pointer; text-decoration:underline; font-size:12px; margin-top:15px; color:#aaa;">
+        عودة للخلف
+    </p>
+</div>
+</section>
 <section id="services" class="services">
     <div class="card">
         <h3>تصميم عصري</h3>
@@ -40,19 +63,64 @@
         <p>موقع سريع وخفيف.</p>
     </div>
 </section>
+<hr class="section-divider">
 
 <section id="contact" class="contact">
+    <a href="#" class="btn-start">
+    <i class="fas fa-home"></i> العودة الى الرئيسية
+</a>
+</a>
     <h2>رسالتك</h2>
-    <form action="https://formspree.io/f/xwvekpkq" method="POST">
-        <input type="text" name="name" placeholder="اسمك" required>
-        <textarea name="message" placeholder="رسالتك" required></textarea>
-        <button>إرسال</button>
-    </form>
+    <form id="contactForm">
+    <input type="text" placeholder="الاسم" required>
+    <textarea placeholder="رسالتك"required></textarea>
+    <button type="submit" class="btn-start">إرسال</button>
+    
+</form>
+<div id="successMessage" style="display:none; color: #ffffff; margin-top: 20px; font-weight: bold;">
+    ! تم إرسال رسالتك بنجاح شكرا لك
+</div>
 </section>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
+    this.style.transition = 'opacity 0.5s';
+    this.style.opacity = '0';
+
+    setTimeout(() => {
+        this.style.display = 'none';
+        const successMsg = document.getElementById('successMessage');
+        successMsg.style.display = 'block';
+        successMsg.style.opacity = '0';
+        
+        setTimeout(() => {
+            successMsg.style.transition = 'opacity 0.5s';
+            successMsg.style.opacity = '1';
+        }, 50);
+    }, 500);
+});
+</script>
+<hr class="section-divider">
 <footer>
     <p> تم تصميم هذا الموقع التجريبي من قبل ابراهيم رضوان عبر لغة html وcss</p>
 </footer>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const startBtn = document.getElementById('start-now-btn');
+        const defaultContent = document.getElementById('default-hero');
+        const optionsContent = document.getElementById('options-hero');
+
+        if(startBtn) {
+            startBtn.addEventListener('click', function() {
+                console.log("تم الضغط على الزر بنجاح!"); 
+                defaultContent.style.display = 'none';
+                optionsContent.style.display = 'block';
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
