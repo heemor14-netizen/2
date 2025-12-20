@@ -1,98 +1,143 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <link rel="apple-touch-icon-precomposed" href="./images/app-icon.png">
-
-<link rel="icon" type="image/png" href="images/app-icon.png">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="HEEMO">
-<link rel="apple-touch-startup-image" href="images/app-icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>شروحات التصميم</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEEMO | الشرح</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" href="images/app-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0b1120">
+
+    <style>
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: #0b1120; 
+            color: white; 
+            margin: 0; padding: 0; overflow-x: hidden;
+        }
+
+        /* --- الهيدر (موحد 100% مع باقي الصفحات) --- */
+        header { 
+            padding: 15px 8%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background-color: #0b1120;
+            border-bottom: 1px solid #1f2937;
+            height: 45px; /* تثبيت الارتفاع لضمان عدم التغير */
+        }
+        .logo-img { height: 150px; }
+        nav ul { list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; }
+        nav ul li a { 
+            color: white; text-decoration: none; font-weight: 600; font-size: 14px; 
+            padding: 8px 15px; border-radius: 8px; transition: 0.3s;
+            display: inline-block;
+        }
+        nav ul li a:hover { background-color: #1f2937; transform: translateY(-3px); }
+        .active-link { background-color: #1f2937; border-bottom: 2px solid white; }
+
+        /* --- محتوى الشرح (تم توحيد المقاسات هنا) --- */
+        .main-content {
+            max-width: 1200px; /* نفس عرض الكروت في باقي الصفحات */
+            margin: 0 auto;
+            padding: 40px 8%;
+        }
+
+        .hero-section { text-align: center; padding: 40px 20px; }
+        .hero-section h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero-section p { color: #94a3b8; margin-bottom: 40px; }
+
+        .explain-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .step-card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 600px; /* جعل عرض البطاقة مريح للعين وموحد */
+            display: flex;
+            gap: 20px;
+            transition: 0.3s;
+        }
+        .step-card:hover { border-color: white; transform: translateY(-5px); }
+
+        .step-num {
+            background: white; color: black;
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; flex-shrink: 0;
+        }
+
+        .step-text h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        .step-text p { margin: 0; color: #94a3b8; font-size: 14px; line-height: 1.6; }
+
+        /* --- توافق الجوال --- */
+        @media (max-width: 768px) {
+            header { padding: 15px 5%; }
+            .hero-section h1 { font-size: 1.8rem; }
+            .step-card { flex-direction: column; text-align: center; align-items: center; }
+        }
+    </style>
 </head>
 <body>
 
-<input type="checkbox" id="dark-toggle">
-<label for="dark-toggle" class="dark-btn">🌙</label>
+    <header>
+        <div class="logo"><img src="./images/logo.png" alt="HEEMO" class="logo-img"></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="join.html" class="active-link">الشرح</a></li>
+                <li><a href="quizzes.html">الاختبارات</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<header class="navbar">
-    <img src="images/logo.PNG" alt="HEEMO Logo" class="pulse-logo">
-    <nav>
-        <a href="index.html" class="btn-back">
-    <i class="fas fa-arrow-right"></i> العودة للرئيسية
-</a>
-        <a href="#"></a>
-        <a href="#services">شروحات التصميم</a>
-        <a href="#contact"></a>
-    </nav>
-</header>
- <section class="video-section">
-    <h1 class="section-title">المقطع الأول</h1>
-    <p class="section-subtitle">شرح لغة html</p>
+    <div class="main-content">
+        <section class="hero-section">
+            <h1>دروس الشرح</h1>
+            <p>تعلم بذكاء، وطبق باحترافية مع مسارات HEEMO</p>
+        </section>
 
-    <div class="video-container">
-        <div class="video-card" onclick="openModal()">
-            <img src="images/v1.JPEG" alt="شرح HTML">
-            <div class="play-overlay">▶</div>
+        <div class="explain-grid">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                    <h3>أساسيات HTML</h3>
+                    <p>تعلم كيفية بناء الهيكل العظمي لموقعك، وفهم الأوسمة (Tags) وكيفية ترتيب العناصر بشكل صحيح.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                    <h3>تنسيقات CSS</h3>
+                    <p>اجعل موقعك ينبض بالحياة من خلال إضافة الألوان، الخطوط، وتوزيع العناصر بطريقة احترافية متجاوبة.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                    <h3>الاختبار النهائي</h3>
+                    <p>بعد إنهاء الدروس، توجه مباشرة لقسم الاختبارات لقياس مستواك والحصول على تقييم فوري لمهاراتك.</p>
+                </div>
+            </div>
         </div>
     </div>
-</section>
-<div id="videoModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <iframe id="videoPlayer" src="https://www.youtube.com/embed/YhH-FE5Y0MQ" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
-<hr class="section-divider">
+    <hr style="border: 0; border-top: 1px solid #ffffff; margin: 40px 0;">
 
-<script>
-    function openModal() {
-        document.getElementById("videoModal").style.display = "flex";
-    }
-    function closeModal() {
-        document.getElementById("videoModal").style.display = "none";
-        // إيقاف الفيديو
-        var iframe = document.getElementById("videoPlayer");
-        var url = iframe.src;
-        iframe.src = url;
-    }
-    window.onclick = function(event) {
-        if (event.target == document.getElementById("videoModal")) { closeModal(); }
-    }
-    
-</script>
-
-</div>
-
-
-<section class="video-section">
-    <h1 class="section-title">المقطع الثاني</h1>
-    <p class="section-subtitle">شرح لغة css</p>
-
-    <div class="video-container">
-        <div class="video-card" onclick="openModal()">
-            <img src="images/v1.JPEG" alt="شرح HTML">
-            <div class="play-overlay">▶</div>
-        </div>
-    </div>
-</section>
-<div id="videoModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <iframe id="videoPlayer" src="https://www.youtube.com/embed/YhH-FE5Y0MQ" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
-
-<hr class="section-divider">
-<footer>
-    <p> تم تصميم هذا الموقع التجريبي من قبل ابراهيم رضوان عبر لغة html وcss</p>
-</footer>
+    <footer style="text-align: center; padding: 40px; color: #4b5563;">
+        <p>جميع الحقوق محفوظة لـ HEEMO &copy; 2025</p>
+    </footer>
 
 </body>
 </html>
-

@@ -1,38 +1,241 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <link rel="apple-touch-icon-precomposed" href="images/app-icon.png">
-
-<link rel="icon" type="image/png" href="images/app-icon.png">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="HEEMO">
-<link rel="apple-touch-startup-image" href="images/app-icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>الاختبارات</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEEMO | الاختبارات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" href="images/app-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0b1120">
+
+    <style>
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: #0b1120; 
+            color: white; 
+            margin: 0; padding: 0; overflow-x: hidden;
+        }
+
+        /* --- الهيدر (موحد 100% مع باقي الصفحات) --- */
+        header { 
+            padding: 15px 8%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background-color: #0b1120;
+            border-bottom: 1px solid #1f2937;
+            height: 45px; /* نفس الارتفاع الموحد */
+        }
+        .logo-img { height: 150px; }
+        nav ul { list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; }
+        nav ul li a { 
+            color: white; text-decoration: none; font-weight: 600; font-size: 14px; 
+            padding: 8px 15px; border-radius: 8px; transition: 0.3s;
+            display: inline-block;
+        }
+        nav ul li a:hover { background-color: #1f2937; transform: translateY(-3px); }
+        .active-link { background-color: #1f2937; border-bottom: 2px solid white; }
+
+        /* --- المحتوى الأساسي (مقاسات موحدة) --- */
+        .main-content {
+            max-width: 1200px; 
+            margin: 0 auto;
+            padding: 40px 8%;
+        }
+
+        .hero-section { text-align: center; padding: 40px 20px; }
+        .hero-section h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero-section p { color: #94a3b8; margin-bottom: 40px; }
+
+        /* --- تنسيق الكروت لتناسب الحجم الموحد --- */
+        .card-container { 
+            display: flex; 
+            gap: 25px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+        .card { 
+            background: #111827; 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 1px solid #1f2937; 
+            text-align: center; 
+            width: 280px; 
+            transition: 0.3s; 
+        }
+        .card:hover { border-color: white; transform: translateY(-5px); }
+        .card i { font-size: 45px; margin-bottom: 15px; }
+
+        .btn-start { 
+            display: block; margin-top: 20px; padding: 12px; background: white; color: black; 
+            border-radius: 10px; font-weight: bold; cursor: pointer; border: none; width: 100%; 
+            font-family: 'Tajawal'; font-size: 16px; transition: 0.3s;
+        }
+
+        /* --- حاوية الاختبار --- */
+        #quiz-container { 
+            display: none; 
+            max-width: 600px; /* نفس عرض كروت الشرح */
+            margin: 20px auto; 
+            padding: 30px; 
+            background: #111827; 
+            border-radius: 20px; 
+            border: 1px solid white; 
+            text-align: right; 
+        }
+        .option-btn { 
+            width: 100%; padding: 15px; margin-top: 12px; background: #1f2937; color: white; 
+            border: 1px solid #333; border-radius: 10px; cursor: pointer; text-align: right; 
+            font-family: 'Tajawal'; font-size: 15px; transition: 0.2s;
+        }
+        .option-btn:hover { background: #334155; }
+
+        #next-btn { 
+            display: none; margin-top: 25px; width: 100%; padding: 14px; background: white; 
+            color: black; border-radius: 10px; font-weight: bold; cursor: pointer; border: none;
+        }
+
+        #result-container { display: none; text-align: center; padding: 60px 20px; }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 5%; }
+            .hero-section h1 { font-size: 1.8rem; }
+            .card { width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-<input type="checkbox" id="dark-toggle">
-<label for="dark-toggle" class="dark-btn">🌙</label>
+    <header>
+        <div class="logo"><img src="./images/logo.png" alt="HEEMO" class="logo-img"></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="join.html">الشرح</a></li>
+                <li><a href="quizzes.html" class="active-link">الاختبارات</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<header class="navbar">
-    <img src="images/logo.PNG" alt="HEEMO Logo" class="pulse-logo">
-    <nav>
-        <a href="index.html" class="btn-back">
-    <i class="fas fa-arrow-right"></i> العودة للرئيسية
-</a>
-        
-        <a href="#services">الاختبارات</a>
-        <a href="#contact"></a>
-    </nav>
-</header>
-<section class="hero">
-    <div id="box1">
-        <h1>عادني مقد سويته ولاشي</h1>
-        <p></p>
-</div>
+    <div id="main-content-wrapper" class="main-content">
+        <section class="hero-section">
+            <h1>قسم الاختبارات</h1>
+            <p>تحدى نفسك الآن في HTML و CSS</p>
+        </section>
+
+        <div class="card-container">
+            <div class="card">
+                <i class="fab fa-html5" style="color: #e34c26;"></i>
+                <h3>اختبار HTML</h3>
+                <p style="color: #94a3b8; font-size: 13px;">8 أسئلة في هيكلة المواقع والوسوم.</p>
+                <button class="btn-start" onclick="startQuiz('html')">ابدأ الآن</button>
+            </div>
+
+            <div class="card">
+                <i class="fab fa-css3-alt" style="color: #264de4;"></i>
+                <h3>اختبار CSS</h3>
+                <p style="color: #94a3b8; font-size: 13px;">8 أسئلة في التنسيقات والألوان.</p>
+                <button class="btn-start" onclick="startQuiz('css')">ابدأ الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span id="quiz-title" style="color: #94a3b8; font-weight: bold;"></span>
+            <span id="question-number" style="color: #94a3b8; font-size: 13px;"></span>
+        </div>
+        <h2 id="question-text" style="margin: 20px 0; line-height: 1.4;"></h2>
+        <div id="options-container"></div>
+        <button id="next-btn" onclick="nextQuestion()">السؤال التالي ←</button>
+    </div>
+
+    <div id="result-container">
+        <i class="fas fa-medal" style="font-size: 60px; color: gold; margin-bottom: 20px;"></i>
+        <h2>أحسنت! انتهى الاختبار</h2>
+        <p id="score-text" style="font-size: 26px; font-weight: bold; margin: 20px 0;"></p>
+        <button class="btn-start" style="max-width: 200px; margin: 0 auto;" onclick="location.reload()">عودة للاختبارات</button>
+    </div>
+
+    <script>
+        const allQuizzes = {
+            html: [
+                { q: "ماذا يعني اختصار HTML؟", options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language"], a: 0 },
+                { q: "ما هو الوسم الصحيح لأكبر عنوان؟", options: ["<h6>", "<h1>", "<head>"], a: 1 },
+                { q: "ما هو الوسم الصحيح لعمل سطر جديد؟", options: ["<br>", "<lb>", "<break>"], a: 0 },
+                { q: "كيف نكتب تعليق في HTML؟", options: ["// تعليق", "/* تعليق */", ""], a: 2 },
+                { q: "أي وسم يستخدم لإنشاء قائمة منقطة؟", options: ["<ul>", "<ol>", "<li>"], a: 0 },
+                { q: "ما هو الوسم المستخدم لإضافة صورة؟", options: ["<image>", "<img>", "<picture>"], a: 1 },
+                { q: "ما هو السمة (Attribute) المستخدمة لإضافة رابط؟", options: ["src", "link", "href"], a: 2 },
+                { q: "أي وسم يستخدم لتعريف عنوان الصفحة في شريط المتصفح؟", options: ["<head>", "<title>", "<meta>"], a: 1 }
+            ],
+            css: [
+                { q: "ماذا يعني اختصار CSS؟", options: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets"], a: 0 },
+                { q: "أين يتم وضع رابط ملف CSS الخارجي؟", options: ["في نهاية <body>", "في قسم <head>", "داخل <html>"], a: 1 },
+                { q: "أي خاصية تستخدم لتغيير لون الخلفية؟", options: ["color", "bg-color", "background-color"], a: 2 },
+                { q: "كيف نغير لون النص؟", options: ["text-color", "font-color", "color"], a: 2 },
+                { q: "أي خاصية تتحكم في حجم الخط؟", options: ["font-size", "text-size", "font-style"], a: 0 },
+                { q: "كيف نجعل الخط عريضاً (Bold)؟", options: ["font-weight: bold", "font: bold", "text-style: bold"], a: 0 },
+                { q: "ما هي الخاصية التي تضيف مساحة داخل حدود العنصر؟", options: ["margin", "padding", "border-spacing"], a: 1 },
+                { q: "كيف نزيل الخط تحت الروابط؟", options: ["text-decoration: none", "underline: none", "text-style: plain"], a: 0 }
+            ]
+        };
+
+        let currentQuestions = [];
+        let currentIdx = 0;
+        let score = 0;
+
+        function startQuiz(type) {
+            currentQuestions = allQuizzes[type];
+            currentIdx = 0; score = 0;
+            document.getElementById('quiz-title').innerText = type.toUpperCase();
+            document.getElementById('main-content-wrapper').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const item = currentQuestions[currentIdx];
+            document.getElementById('question-number').innerText = `سؤال ${currentIdx + 1} من ${currentQuestions.length}`;
+            document.getElementById('question-text').innerText = item.q;
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            item.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(i, btn);
+                container.appendChild(btn);
+            });
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function checkAnswer(i, btn) {
+            const correct = currentQuestions[currentIdx].a;
+            const btns = document.querySelectorAll('.option-btn');
+            btns.forEach(b => b.disabled = true);
+            if(i === correct) { btn.style.background = "#22c55e"; score++; }
+            else { btn.style.background = "#ef4444"; btns[correct].style.background = "#22c55e"; }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if(currentIdx < currentQuestions.length) { showQuestion(); }
+            else {
+                document.getElementById('quiz-container').style.display = 'none';
+                document.getElementById('result-container').style.display = 'block';
+                document.getElementById('score-text').innerText = `${score} من ${currentQuestions.length}`;
+            }
+        }
+    </script>
+    <hr style="border: 0; border-top: 1px solid #ffffff; margin: 40px 0;">
+     <footer style="text-align: center; padding: 40px; color: #4b5563;">
+        <p>جميع الحقوق محفوظة لـ HEEMO &copy; 2025</p>
+    </footer>
+
+</body>
+</html>
