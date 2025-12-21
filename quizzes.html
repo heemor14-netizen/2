@@ -1,239 +1,291 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEEMO | الرئيسية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="apple-touch-icon" href="images/app-logo.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0b1120">
-    <style>
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background-color: #0b1120; 
-            color: white; 
-            margin: 0; padding: 0; overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEEMO | الاختبارات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+body{font-family:'Tajawal',sans-serif;background:#0b1120;color:#fff;margin:0}
+header{padding:15px 8%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f2937;position:relative}
+.logo-img{height:110px}
+nav ul{list-style:none;display:flex;gap:10px;padding:0}
+nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
+.active-link{background:#1f2937}
 
-        /* --- الهيدر (موحد 100% مع باقي الصفحات) --- */
-        header { 
-            padding: 15px 8%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: #0b1120;
-            border-bottom: 1px solid #1f2937;
-        }
-        .logo-img { height: 150px; }
-        nav ul { list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; }
-        nav ul li a { 
-            color: white; text-decoration: none; font-weight: 600; font-size: 14px; 
-            padding: 8px 15px; border-radius: 8px; transition: 0.3s;
-            display: inline-block;
-        }
-        nav ul li a:hover { background-color: #1f2937; transform: translateY(-3px); }
-        .active-link { background-color: #1f2937; border-bottom: 2px solid white; }
+/* أيقونة الحساب */
+#account-icon{position:absolute;left:20px;top:20px;font-size:22px;cursor:pointer}
+#account-menu{display:none;position:absolute;left:0;top:40px;background:#111827;border:1px solid #334155;border-radius:15px;width:200px;padding:15px;text-align:right;z-index:1000}
+#account-menu p{margin:10px 0;font-weight:bold}
+#account-menu button{width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#22c55e;color:white;font-weight:bold}
+#account-menu button:hover{filter:brightness(1.2)}
 
-        /* --- المحتوى الأساسي (مقاسات موحدة) --- */
-        .main-content {
-            max-width: 1200px; 
-            margin: 0 auto;
-            padding: 40px 8%;
-        }
+/* المحتوى */
+.main-content{max-width:1200px;margin:auto;padding:40px 8%}
+.section-title{font-size:22px;margin:40px 0 20px;font-weight:bold}
+.card-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:20px;text-align:center;transition:.3s;position:relative}
+.card.locked{opacity:.4;pointer-events:none}
+.card.locked::after{content:"🔒 مقفل";position:absolute;top:10px;left:10px;font-size:12px;color:#fff;background:#000;padding:4px 8px;border-radius:6px}
+.card i{font-size:36px;margin-bottom:10px}
+.btn-start{width:100%;padding:10px;margin-top:15px;border:none;border-radius:8px;cursor:pointer;font-weight:bold}
 
-        .hero-section { text-align: center; padding: 40px 20px; }
-        .hero-section h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .hero-section p { color: #94a3b8; margin-bottom: 40px; }
-
-        /* --- تنسيق الكروت لتناسب الحجم الموحد --- */
-        .card-container { 
-            display: flex; 
-            gap: 25px; 
-            justify-content: center; 
-            flex-wrap: wrap; 
-        }
-        .card { 
-            background: #111827; 
-            padding: 30px; 
-            border-radius: 20px; 
-            border: 1px solid #1f2937; 
-            text-align: center; 
-            width: 280px; 
-            transition: 0.3s; 
-        }
-        .card:hover { border-color: white; transform: translateY(-5px); }
-        .card i { font-size: 45px; margin-bottom: 15px; }
-
-        .btn-start { 
-            display: block; margin-top: 20px; padding: 12px; background: white; color: black; 
-            border-radius: 10px; font-weight: bold; cursor: pointer; border: none; width: 100%; 
-            font-family: 'Tajawal'; font-size: 16px; transition: 0.3s;
-        }
-
-        /* --- حاوية الاختبار --- */
-        #quiz-container { 
-            display: none; 
-            max-width: 600px; /* نفس عرض كروت الشرح */
-            margin: 20px auto; 
-            padding: 30px; 
-            background: #111827; 
-            border-radius: 20px; 
-            border: 1px solid white; 
-            text-align: right; 
-        }
-        .option-btn { 
-            width: 100%; padding: 15px; margin-top: 12px; background: #1f2937; color: white; 
-            border: 1px solid #333; border-radius: 10px; cursor: pointer; text-align: right; 
-            font-family: 'Tajawal'; font-size: 15px; transition: 0.2s;
-        }
-        .option-btn:hover { background: #334155; }
-
-        #next-btn { 
-            display: none; margin-top: 25px; width: 100%; padding: 14px; background: white; 
-            color: black; border-radius: 10px; font-weight: bold; cursor: pointer; border: none;
-        }
-
-        #result-container { display: none; text-align: center; padding: 60px 20px; }
-
-        @media (max-width: 768px) {
-            header { padding: 15px 5%; }
-            .hero-section h1 { font-size: 1.8rem; }
-            .card { width: 100%; }
-        }
-    </style>
+/* Quiz */
+#quiz-container{display:none;max-width:600px;margin:40px auto;background:#111827;border:1px solid #fff;border-radius:20px;padding:30px}
+#timer-bar{font-size:14px;color:#94a3b8;margin-bottom:10px;text-align:left;}
+.option-btn{width:100%;padding:12px;margin-top:10px;background:#1f2937;color:#fff;border:1px solid #333;border-radius:10px;cursor:pointer}
+#next-btn{display:none;margin-top:20px;width:100%;padding:12px;font-weight:bold}
+#quit-btn{display:inline-block;margin-top:10px;padding:8px 15px;border-radius:8px;background:#ef4444;color:#fff;border:none;cursor:pointer}
+#result-container{display:none;text-align:center;padding:60px 20px}
+#certificate-container{display:none;text-align:center;padding:40px;background:#111827;border:2px solid #fff;border-radius:20px;margin:40px auto;max-width:600px}
+#certificate-container h2{color:#22c55e;margin-bottom:20px}
+#certificate-container p{margin:15px 0;font-size:18px}
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo"><img src="./images/logo.png" alt="HEEMO" class="logo-img"></div>
-        <nav>
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="join.html">الشرح</a></li>
-                <li><a href="quizzes.html" class="active-link">الاختبارات</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+<img src="images/logo.png" class="logo-img">
+<nav>
+<ul>
+<li><a href="index.html">الرئيسية</a></li>
+<li><a href="join.html">الشرح</a></li>
+<li><a class="active-link">الاختبارات</a></li>
+</ul>
+</nav>
 
-    <div id="main-content-wrapper" class="main-content">
-        <section class="hero-section">
-            <h1>قسم الاختبارات</h1>
-            <p>تحدى نفسك الآن في HTML و CSS</p>
-        </section>
+<!-- أيقونة الحساب -->
+<div id="account-icon"><i class="fas fa-user-circle"></i></div>
+<div id="account-menu">
+<p id="user-name">غير مسجل</p>
+<input type="text" id="username" placeholder="أدخل اسمك">
+<button onclick="login()">تسجيل الدخول</button>
+<button onclick="logout()" style="display:none;background:#ef4444;margin-top:10px;">تغيير الحساب</button>
+</div>
+</header>
 
-        <div class="card-container">
-            <div class="card">
-                <i class="fab fa-html5" style="color: #e34c26;"></i>
-                <h3>اختبار HTML</h3>
-                <p style="color: #94a3b8; font-size: 13px;">8 أسئلة في هيكلة المواقع والوسوم.</p>
-                <button class="btn-start" onclick="startQuiz('html')">ابدأ الآن</button>
-            </div>
+<div id="main-content-wrapper" class="main-content">
+<h2 class="section-title" style="color:#e34c26">اختبارات HTML</h2>
+<div class="card-container">
+<div class="card" data-quiz="html1"><i class="fab fa-html5" style="color:#e34c26"></i><h3>HTML 1</h3><button class="btn-start" onclick="startQuiz('html1')">ابدأ</button></div>
+<div class="card locked" data-quiz="html2"><i class="fab fa-html5" style="color:#e34c26"></i><h3>HTML 2</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="html3"><i class="fab fa-html5" style="color:#e34c26"></i><h3>HTML 3</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="html4"><i class="fab fa-html5" style="color:#e34c26"></i><h3>HTML 4</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="html5"><i class="fab fa-html5" style="color:#e34c26"></i><h3>HTML 5</h3><button class="btn-start">مقفل</button></div>
+</div>
 
-            <div class="card">
-                <i class="fab fa-css3-alt" style="color: #264de4;"></i>
-                <h3>اختبار CSS</h3>
-                <p style="color: #94a3b8; font-size: 13px;">8 أسئلة في التنسيقات والألوان.</p>
-                <button class="btn-start" onclick="startQuiz('css')">ابدأ الآن</button>
-            </div>
-        </div>
-    </div>
+<hr style="border:0;border-top:1px solid #1f2937;margin:60px 0">
 
-    <div id="quiz-container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span id="quiz-title" style="color: #94a3b8; font-weight: bold;"></span>
-            <span id="question-number" style="color: #94a3b8; font-size: 13px;"></span>
-        </div>
-        <h2 id="question-text" style="margin: 20px 0; line-height: 1.4;"></h2>
-        <div id="options-container"></div>
-        <button id="next-btn" onclick="nextQuestion()">السؤال التالي ←</button>
-    </div>
+<h2 class="section-title" style="color:#264de4">اختبارات CSS</h2>
+<div class="card-container">
+<div class="card locked" data-quiz="css1"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 1</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="css2"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 2</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="css3"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 3</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="css4"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 4</h3><button class="btn-start">مقفل</button></div>
+<div class="card locked" data-quiz="css5"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 5</h3><button class="btn-start">مقفل</button></div>
+</div>
+</div>
 
-    <div id="result-container">
-        <i class="fas fa-medal" style="font-size: 60px; color: gold; margin-bottom: 20px;"></i>
-        <h2>أحسنت! انتهى الاختبار</h2>
-        <p id="score-text" style="font-size: 26px; font-weight: bold; margin: 20px 0;"></p>
-        <button class="btn-start" style="max-width: 200px; margin: 0 auto;" onclick="location.reload()">عودة للاختبارات</button>
-    </div>
+<div id="quiz-container">
+<div id="timer-bar"></div>
+<h2 id="question-text"></h2>
+<div id="options-container"></div>
+<button id="next-btn" onclick="nextQuestion()">التالي</button>
+<button id="quit-btn" onclick="quitQuiz()">الرجوع</button>
+</div>
 
-    <script>
-        const allQuizzes = {
-            html: [
-                { q: "ماذا يعني اختصار HTML؟", options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language"], a: 0 },
-                { q: "ما هو الوسم الصحيح لأكبر عنوان؟", options: ["<h6>", "<h1>", "<head>"], a: 1 },
-                { q: "ما هو الوسم الصحيح لعمل سطر جديد؟", options: ["<br>", "<lb>", "<break>"], a: 0 },
-                { q: "كيف نكتب تعليق في HTML؟", options: ["// تعليق", "/* تعليق */", ""], a: 2 },
-                { q: "أي وسم يستخدم لإنشاء قائمة منقطة؟", options: ["<ul>", "<ol>", "<li>"], a: 0 },
-                { q: "ما هو الوسم المستخدم لإضافة صورة؟", options: ["<image>", "<img>", "<picture>"], a: 1 },
-                { q: "ما هو السمة (Attribute) المستخدمة لإضافة رابط؟", options: ["src", "link", "href"], a: 2 },
-                { q: "أي وسم يستخدم لتعريف عنوان الصفحة في شريط المتصفح؟", options: ["<head>", "<title>", "<meta>"], a: 1 }
-            ],
-            css: [
-                { q: "ماذا يعني اختصار CSS؟", options: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets"], a: 0 },
-                { q: "أين يتم وضع رابط ملف CSS الخارجي؟", options: ["في نهاية <body>", "في قسم <head>", "داخل <html>"], a: 1 },
-                { q: "أي خاصية تستخدم لتغيير لون الخلفية؟", options: ["color", "bg-color", "background-color"], a: 2 },
-                { q: "كيف نغير لون النص؟", options: ["text-color", "font-color", "color"], a: 2 },
-                { q: "أي خاصية تتحكم في حجم الخط؟", options: ["font-size", "text-size", "font-style"], a: 0 },
-                { q: "كيف نجعل الخط عريضاً (Bold)؟", options: ["font-weight: bold", "font: bold", "text-style: bold"], a: 0 },
-                { q: "ما هي الخاصية التي تضيف مساحة داخل حدود العنصر؟", options: ["margin", "padding", "border-spacing"], a: 1 },
-                { q: "كيف نزيل الخط تحت الروابط؟", options: ["text-decoration: none", "underline: none", "text-style: plain"], a: 0 }
-            ]
-        };
+<div id="result-container">
+<h2>انتهى الاختبار 🎉</h2>
+<p id="score-text"></p>
+<button class="btn-start" onclick="location.reload()">رجوع للاختبارات</button>
+</div>
 
-        let currentQuestions = [];
-        let currentIdx = 0;
-        let score = 0;
+<div id="certificate-container">
+<h2>🏆 شهادة شكر 🏆</h2>
+<p id="cert-lang"></p>
+<p id="cert-user"></p>
+<p id="cert-score"></p>
+<button class="btn-start" onclick="location.reload()">رجوع للاختبارات</button>
+</div>
 
-        function startQuiz(type) {
-            currentQuestions = allQuizzes[type];
-            currentIdx = 0; score = 0;
-            document.getElementById('quiz-title').innerText = type.toUpperCase();
-            document.getElementById('main-content-wrapper').style.display = 'none';
-            document.getElementById('quiz-container').style.display = 'block';
-            showQuestion();
-        }
+<script>
+// ترتيب الاختبارات
+const order=["html1","html2","html3","html4","html5","css1","css2","css3","css4","css5"];
+let unlocked=JSON.parse(localStorage.getItem("unlocked"))||["html1"];
+let currentUser=localStorage.getItem("heemoUser")||"";
 
-        function showQuestion() {
-            const item = currentQuestions[currentIdx];
-            document.getElementById('question-number').innerText = `سؤال ${currentIdx + 1} من ${currentQuestions.length}`;
-            document.getElementById('question-text').innerText = item.q;
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            item.options.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(i, btn);
-                container.appendChild(btn);
-            });
-            document.getElementById('next-btn').style.display = 'none';
-        }
+// تخزين الدرجات لكل لغة
+let grades=JSON.parse(localStorage.getItem("grades"))||{html:[],css:[]};
 
-        function checkAnswer(i, btn) {
-            const correct = currentQuestions[currentIdx].a;
-            const btns = document.querySelectorAll('.option-btn');
-            btns.forEach(b => b.disabled = true);
-            if(i === correct) { btn.style.background = "#22c55e"; score++; }
-            else { btn.style.background = "#ef4444"; btns[correct].style.background = "#22c55e"; }
-            document.getElementById('next-btn').style.display = 'block';
-        }
+function updateLocks(){
+document.querySelectorAll(".card").forEach(card=>{
+const q=card.dataset.quiz;
+if(unlocked.includes(q)){
+card.classList.remove("locked");
+card.querySelector("button").innerText="ابدأ";
+card.querySelector("button").onclick=()=>startQuiz(q);
+}else{
+card.classList.add("locked");
+card.querySelector("button").innerText="مقفل";
+card.querySelector("button").onclick=null;
+}
+});
+}
 
-        function nextQuestion() {
-            currentIdx++;
-            if(currentIdx < currentQuestions.length) { showQuestion(); }
-            else {
-                document.getElementById('quiz-container').style.display = 'none';
-                document.getElementById('result-container').style.display = 'block';
-                document.getElementById('score-text').innerText = `${score} من ${currentQuestions.length}`;
-            }
-        }
-    </script>
-    <hr style="border: 0; border-top: 1px solid #ffffff; margin: 40px 0;">
-     <footer style="text-align: center; padding: 40px; color: #4b5563;">
-        <p>جميع الحقوق محفوظة لـ HEEMO &copy; 2025</p>
-    </footer>
+function login(){
+let username=document.getElementById("username").value.trim();
+if(username===""){alert("الرجاء إدخال اسمك"); return;}
+if(username!==currentUser){
+currentUser=username;
+localStorage.setItem("heemoUser",username);
+localStorage.setItem("unlocked",JSON.stringify(["html1"]));
+unlocked=["html1"];
+grades={html:[],css:[]};
+localStorage.setItem("grades",JSON.stringify(grades));
+updateLocks();
+}
+document.getElementById("user-name").innerText=username;
+document.getElementById("username").style.display="none";
+document.querySelector("#account-menu button[onclick='login()']").style.display="none";
+document.querySelector("#account-menu button[onclick='logout()']").style.display="block";
+}
+
+function logout(){
+currentUser="";
+localStorage.removeItem("heemoUser");
+localStorage.setItem("unlocked",JSON.stringify(["html1"]));
+unlocked=["html1"];
+grades={html:[],css:[]};
+localStorage.setItem("grades",JSON.stringify(grades));
+updateLocks();
+document.getElementById("user-name").innerText="غير مسجل";
+document.getElementById("username").style.display="block";
+document.querySelector("#account-menu button[onclick='login()']").style.display="block";
+document.querySelector("#account-menu button[onclick='logout()']").style.display="none";
+}
+
+updateLocks();
+if(currentUser){
+document.getElementById("user-name").innerText=currentUser;
+document.getElementById("username").style.display="none";
+document.querySelector("#account-menu button[onclick='login()']").style.display="none";
+document.querySelector("#account-menu button[onclick='logout()']").style.display="block";
+}
+
+// Quiz
+const allQuizzes={
+html1:[{q:"HTML تعني؟",options:["Hyper Text Markup Language","Home Tool","High Text"],a:0},{q:"أكبر عنوان؟",options:["h1","h6","head"],a:0},{q:"فقرة؟",options:["p","div","span"],a:0},{q:"صورة؟",options:["img","image","pic"],a:0},{q:"رابط؟",options:["a","link","href"],a:0},{q:"تعليق؟",options:["//","/* */","<!-- -->"],a:2},{q:"قائمة؟",options:["ul","ol","li"],a:0},{q:"سطر جديد؟",options:["br","lb","break"],a:0}],
+html2:[{q:"title؟",options:["title","meta","head"],a:0},{q:"body؟",options:["body","html","main"],a:0},{q:"alt؟",options:["alt","src","title"],a:0},{q:"ol؟",options:["ol","ul","li"],a:0},{q:"table؟",options:["table","tab","grid"],a:0},{q:"tr؟",options:["tr","td","th"],a:0},{q:"td؟",options:["td","tr","th"],a:0},{q:"th؟",options:["th","td","head"],a:0}],
+html3:[{q:"مثال؟",options:["1","2","3"],a:0}],
+html4:[{q:"مثال؟",options:["1","2","3"],a:0}],
+html5:[{q:"مثال؟",options:["1","2","3"],a:0}],
+css1:[{q:"CSS تعني؟",options:["Cascading Style Sheets","Creative","Computer"],a:0},{q:"لون الخلفية؟",options:["background-color","color","bg"],a:0},{q:"لون النص؟",options:["color","text-color","font"],a:0},{q:"حجم الخط؟",options:["font-size","text-size","size"],a:0},{q:"محاذاة؟",options:["text-align","align","center"],a:0},{q:"خط عريض؟",options:["font-weight","bold","weight"],a:0},{q:"padding؟",options:["padding","margin","border"],a:0},{q:"vw؟",options:["vw","px","em"],a:0}],
+css2:[{q:"مثال؟",options:["1","2","3"],a:0}],
+css3:[{q:"مثال؟",options:["1","2","3"],a:0}],
+css4:[{q:"مثال؟",options:["1","2","3"],a:0}],
+css5:[{q:"مثال؟",options:["1","2","3"],a:0}]
+};
+
+let current=[],idx=0,score=0,currentQuiz="",timerInterval;
+
+function startQuiz(type){
+currentQuiz=type;
+current=allQuizzes[type];
+idx=0;score=0;
+document.getElementById("main-content-wrapper").style.display="none";
+document.getElementById("quiz-container").style.display="block";
+startTimer(5*60);
+showQuestion();
+}
+
+function showQuestion(){
+let q=current[idx];
+document.getElementById("question-text").innerText=q.q;
+let c=document.getElementById("options-container");
+c.innerHTML="";
+q.options.forEach((o,i)=>{
+let b=document.createElement("button");
+b.className="option-btn";
+b.innerText=o;
+b.onclick=()=>check(i,b);
+c.appendChild(b);
+});
+document.getElementById("next-btn").style.display="none";
+}
+
+function check(i,b){
+let correct=current[idx].a;
+document.querySelectorAll(".option-btn").forEach(x=>x.disabled=true);
+if(i===correct){b.style.background="#22c55e";score++;} else{b.style.background="#ef4444";document.querySelectorAll(".option-btn")[correct].style.background="#22c55e";}
+document.getElementById("next-btn").style.display="block";
+}
+
+function nextQuestion(){
+idx++;
+if(idx<current.length)showQuestion();
+else finishQuiz();
+}
+
+function finishQuiz(){
+clearInterval(timerInterval);
+document.getElementById("quiz-container").style.display="none";
+document.getElementById("result-container").style.display="block";
+document.getElementById("score-text").innerText=`${score} / ${current.length}`;
+
+// حفظ الدرجة
+if(currentQuiz.startsWith("html")){grades.html.push(score/current.length*100);}
+if(currentQuiz.startsWith("css")){grades.css.push(score/current.length*100);}
+localStorage.setItem("grades",JSON.stringify(grades));
+
+// فتح الاختبار التالي
+const next=order[order.indexOf(currentQuiz)+1];
+if(next && !unlocked.includes(next)){
+unlocked.push(next);
+localStorage.setItem("unlocked",JSON.stringify(unlocked));
+}
+updateLocks();
+
+// الشهادة
+if(currentQuiz==="html5"){showCertificate("HTML",grades.html);}
+if(currentQuiz==="css5"){showCertificate("CSS",grades.css);}
+}
+
+function quitQuiz(){
+clearInterval(timerInterval);
+document.getElementById("quiz-container").style.display="none";
+document.getElementById("main-content-wrapper").style.display="block";
+}
+
+function startTimer(seconds){
+clearInterval(timerInterval);
+function tick(){
+let min=Math.floor(seconds/60);
+let sec=seconds%60;
+document.getElementById("timer-bar").innerText=`الوقت المتبقي: ${min}:${sec<10?'0'+sec:sec}`;
+if(seconds<=0){finishQuiz();}
+seconds--;
+}
+tick();
+timerInterval=setInterval(tick,1000);
+}
+
+function showCertificate(lang,scores){
+document.getElementById("result-container").style.display="none";
+document.getElementById("main-content-wrapper").style.display="none";
+document.getElementById("certificate-container").style.display="block";
+document.getElementById("cert-lang").innerText=`اللغة: ${lang}`;
+document.getElementById("cert-user").innerText=`المستخدم: ${currentUser}`;
+let avg=Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+document.getElementById("cert-score").innerText=`متوسط الدرجات: ${avg} %`;
+}
+
+// أيقونة الحساب
+const accountIcon=document.getElementById("account-icon");
+const accountMenu=document.getElementById("account-menu");
+accountIcon.addEventListener("click",()=>{accountMenu.style.display=accountMenu.style.display==='block'?'none':'block';});
+</script>
 
 </body>
 </html>
+

@@ -501,3 +501,35 @@ h2 {
 :root {
     --apple-icon: url('./images/app-icon.png');
 }
+/* --- تحسين ترتيب كروت الاختبارات --- */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 16px;
+    width: 100%;
+}
+
+.card i {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.card p {
+    font-size: 12px;
+}
+
+.btn-start {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+}

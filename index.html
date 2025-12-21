@@ -12,133 +12,190 @@
     <meta name="theme-color" content="#0b1120">
 
     <style>
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background-color: #0b1120; 
-            color: white; 
-            margin: 0; padding: 0; overflow-x: hidden;
-        }
+     
+     
 
-        /* --- الهيدر --- */
-        header { 
-            padding: 15px 8%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: #0b1120;
-            border-bottom: 1px solid #1f2937;
-        }
-        .logo-img { height: 150px; }
-        nav ul { list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; }
-        nav ul li a { 
-            color: white; text-decoration: none; font-weight: 600; font-size: 14px; 
-            padding: 8px 15px; border-radius: 8px; transition: 0.3s;
-        }
-        nav ul li a:hover { background-color: #1f2937; transform: translateY(-3px); }
-        .active-link { background-color: #1f2937; border-bottom: 2px solid white; }
+body { font-family: 'Tajawal', sans-serif; background-color: #0b1120; color: white; margin:0; padding:0; overflow-x:hidden; }
 
-        /* --- الهيرو --- */
-        .hero {
-            height: 70vh;
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; padding: 0 20px;
-            background: radial-gradient(circle at center, #1e293b 0%, #0b1120 70%);
-        }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; color: white; }
-        .hero p { color: #94a3b8; max-width: 600px; margin-bottom: 30px; }
+/* الهيدر */
+header { padding: 15px 8%; display:flex; justify-content:space-between; align-items:center; background-color:#0b1120; border-bottom:1px solid #1f2937; position: relative; }
+.logo-img { height:150px; }
+nav ul { list-style:none; display:flex; gap:10px; margin:0; padding:0; }
+nav ul li { position: relative; display:flex; align-items:center; }
+nav ul li a { color:white; text-decoration:none; font-weight:600; font-size:14px; padding:8px 15px; border-radius:8px; transition:0.3s; display:inline-block; }
+nav ul li a:hover { background-color:#1f2937; transform:translateY(-3px); }
+nav ul li .lock-icon { margin-left:5px; color:#f87171; display:none; }
 
-        /* أزرار الهيرو */
-        .hero-btns { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-        .main-btn {
-            padding: 12px 30px; background: white; color: black;
-            text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s;
-        }
-        .secondary-btn {
-            padding: 12px 30px; background: #1f2937; color: white;
-            text-decoration: none; border-radius: 10px; font-weight: bold; border: 1px solid #334155; transition: 0.3s;
-        }
-        .main-btn:hover, .secondary-btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
+/* الهيرو */
+.hero { height:70vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 20px; background: radial-gradient(circle at center, #1e293b 0%, #0b1120 70%); }
+.hero h1 { font-size:3rem; margin-bottom:20px; color:white; }
+.hero p { color:#94a3b8; max-width:600px; margin-bottom:30px; }
+.hero-btns { display:flex; gap:15px; flex-wrap:wrap; justify-content:center; }
+.main-btn, .secondary-btn { padding:12px 30px; border-radius:10px; font-weight:bold; transition:0.3s; text-decoration:none; }
+.main-btn { background:white; color:black; }
+.secondary-btn { background:#1f2937; color:white; border:1px solid #334155; }
+.main-btn:hover, .secondary-btn:hover { transform:translateY(-5px); filter: brightness(1.1); }
 
-        /* --- المميزات --- */
-        .features { display: flex; justify-content: center; gap: 20px; padding: 50px 8%; flex-wrap: wrap; }
-        .f-card {
-            background: #111827; padding: 25px; border-radius: 20px;
-            border: 1px solid #1f2937; text-align: center; width: 220px; transition: 0.3s;
-        }
-        .f-card:hover { border-color: white; transform: translateY(-5px); }
-        .f-card i { font-size: 30px; color: white; margin-bottom: 15px; }
+/* المميزات */
+.features { display:flex; justify-content:center; gap:20px; padding:50px 8%; flex-wrap:wrap; }
+.f-card { background:#111827; padding:25px; border-radius:20px; border:1px solid #1f2937; text-align:center; width:220px; transition:0.3s; }
+.f-card:hover { border-color:white; transform:translateY(-5px); }
+.f-card i { font-size:30px; color:white; margin-bottom:15px; }
 
-        /* --- قسم التواصل المضاف --- */
-        .contact-section {
-            padding: 60px 8%; text-align: center; background: #0f172a; border-top: 1px solid #1f2937;
-        }
-        .contact-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            padding: 15px 35px; background: #25d366; color: white;
-            text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.1rem; transition: 0.3s;
-        }
-        .contact-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
+/* التواصل */
+.contact-section { padding:60px 8%; text-align:center; background:#0f172a; border-top:1px solid #1f2937; }
+.contact-btn { display:inline-flex; align-items:center; gap:10px; padding:15px 35px; background:#25d366; color:white; text-decoration:none; border-radius:50px; font-weight:bold; font-size:1.1rem; transition:0.3s; }
+.contact-btn:hover { transform:scale(1.05); box-shadow:0 0 20px rgba(37, 211, 102, 0.4); }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            header { padding: 15px 5%; }
-            nav ul li a { padding: 8px 10px; font-size: 12px; }
-        }
-    </style>
+/* نافذة تسجيل الدخول المنبثقة */
+#login-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+#login-modal .modal-content {
+    background: #111827;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+}
+#login-modal input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    background: #1f2937;
+    color: white;
+}
+#login-modal button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #22c55e;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+#login-modal button:hover { filter: brightness(1.2); }
+
+/* متجاوب */
+@media(max-width:768px){
+    .hero h1{font-size:2rem;} 
+    header{padding:15px 5%;} 
+    nav ul li a{padding:8px 10px; font-size:12px;} 
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo"><img src="images/logo.PNG" alt="HEEMO" class="logo-img"></div>
-        <nav>
-            <ul>
-                
-                <li><a href="index.html"  class="active-link">الرئيسية</a></li>
-                <li><a href="join.html">الشرح</a></li>
-                <li><a href="quizzes.html">الاختبارات</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <div class="logo"><img src="images/logo.PNG" alt="HEEMO" class="logo-img"></div>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active-link">الرئيسية</a></li>
+            <li><a href="join.html" class="nav-protected">الشرح <i class="fas fa-lock lock-icon"></i></a></li>
+            <li><a href="quizzes.html" class="nav-protected">الاختبارات <i class="fas fa-lock lock-icon"></i></a></li>
+        </ul>
+    </nav>
+    <div id="account-icon"><i class="fas fa-user-circle"></i></div>
+</header>
 
-    <section class="hero">
-        <h1>مستقبلك يبدأ بالكود</h1>
-        <p>منصة HEEMO التعليمية تضع بين يديك خلاصة تجربة تعلم البرمجة من الصفر حتى الاحتراف.</p>
-        <div class="hero-btns">
-            <a href="join.html" class="main-btn">ابدأ رحلة التعلم</a>
-            <a href="quizzes.html" class="secondary-btn">جرب الاختبارات</a>
-        </div>
-    </section>
+<!-- مودال تسجيل الدخول -->
+<div id="login-modal">
+    <div class="modal-content">
+        <h3>تسجيل الدخول</h3>
+        <input type="text" id="modal-username" placeholder="أدخل اسمك">
+        <button onclick="loginModal()">تسجيل الدخول</button>
+        <button onclick="closeModal()" style="margin-top:10px;background:#f87171;">إلغاء</button>
+    </div>
+</div>
 
-    <section class="features">
-        <div class="f-card">
-            <i class="fas fa-code"></i>
-            <h3>شرح مبسط</h3>
-            <p>دروس تركز على التطبيق العملي بعيداً عن التعقيد.</p>
-        </div>
-        <div class="f-card">
-            <i class="fas fa-tasks"></i>
-            <h3>تحديات تفاعلية</h3>
-            <p>اختبر معلوماتك فورياً في HTML و CSS.</p>
-        </div>
-        <div class="f-card">
-            <i class="fas fa-headset"></i>
-            <h3>دعم مستمر</h3>
-            <p>فريقنا معك دائماً للإجابة على تساؤلاتك.</p>
-        </div>
-    </section>
+<section class="hero">
+    <h1>مستقبلك يبدأ بالكود</h1>
+    <p>منصة HEEMO التعليمية تضع بين يديك خلاصة تجربة تعلم البرمجة من الصفر حتى الاحتراف.</p>
+    <div class="hero-btns">
+        <a href="join.html" class="main-btn nav-protected">ابدأ رحلة التعلم</a>
+        <a href="quizzes.html" class="secondary-btn nav-protected">جرب الاختبارات</a>
+    </div>
+</section>
 
-    <section class="contact-section">
-        <h2 style="margin-bottom: 10px;">لديك سؤال؟</h2>
-        <p style="color: #94a3b8; margin-bottom: 30px;">نحن هنا لمساعدتك في أي وقت، تواصل معنا مباشرة عبر واتساب.</p>
-        <a href="https://wa.me/966531991617" class="contact-btn"> <i class="fab fa-whatsapp"></i>
-            تواصل معنا الآن
-        </a>
-    </section>
-    <hr style="border: 0; border-top: 1px solid #ffffff; margin: 40px 0;">
+<section class="features">
+    <div class="f-card"><i class="fas fa-code"></i><h3>شرح مبسط</h3><p>دروس تركز على التطبيق العملي بعيداً عن التعقيد.</p></div>
+    <div class="f-card"><i class="fas fa-tasks"></i><h3>تحديات تفاعلية</h3><p>اختبر معلوماتك فورياً في HTML و CSS.</p></div>
+    <div class="f-card"><i class="fas fa-headset"></i><h3>دعم مستمر</h3><p>فريقنا معك دائماً للإجابة على تساؤلاتك.</p></div>
+</section>
 
-    <footer style="text-align: center; padding: 40px; color: #4b5563;">
-        <p>جميع الحقوق محفوظة لـ HEEMO &copy; 2025</p>
-    </footer>
+<section class="contact-section">
+    <h2 style="margin-bottom:10px;">لديك سؤال؟</h2>
+    <p style="color:#94a3b8; margin-bottom:30px;">نحن هنا لمساعدتك في أي وقت، تواصل معنا مباشرة عبر واتساب.</p>
+    <a href="https://wa.me/966531991617" class="contact-btn"><i class="fab fa-whatsapp"></i> تواصل معنا الآن</a>
+</section>
+
+<hr style="border:0;border-top:1px solid #ffffff;margin:40px 0;">
+
+<footer style="text-align:center;padding:40px;color:#4b5563;">
+    <p>جميع الحقوق محفوظة لـ HEEMO &copy; 2025</p>
+</footer>
+
+<script>
+// فتح نافذة تسجيل الدخول عند الضغط على أيقونة الحساب
+const accountIcon = document.getElementById('account-icon');
+accountIcon.addEventListener('click', ()=>{
+    document.getElementById('login-modal').style.display = 'flex';
+});
+
+// إغلاق النافذة
+function closeModal(){
+    document.getElementById('login-modal').style.display = 'none';
+}
+
+// تحديث واجهة المستخدم
+function updateUI(){
+    const user = localStorage.getItem('heemoUser');
+    const accountIconEl = document.getElementById('account-icon');
+    const protectedLinks = document.querySelectorAll('.nav-protected .lock-icon');
+
+    if(user){
+        accountIconEl.innerHTML = `<i class="fas fa-user-circle"></i> ${user}`;
+        // إخفاء القفل
+        protectedLinks.forEach(icon => icon.style.display = 'none');
+    } else {
+        accountIconEl.innerHTML = `<i class="fas fa-user-circle"></i>`;
+        // إظهار القفل
+        protectedLinks.forEach(icon => icon.style.display = 'inline-block');
+    }
+}
+
+// تسجيل الدخول من المودال
+function loginModal(){
+    const username = document.getElementById('modal-username').value.trim();
+    if(username===''){ alert('الرجاء إدخال اسمك'); return; }
+    localStorage.setItem('heemoUser', username);
+    updateUI();
+    closeModal();
+}
+
+// حماية روابط للشرح والاختبارات
+document.querySelectorAll('.nav-protected').forEach(link=>{
+    link.addEventListener('click', function(e){
+        if(!localStorage.getItem('heemoUser')){
+            e.preventDefault();
+            alert('الرجاء تسجيل الدخول أولاً للوصول إلى هذا القسم');
+        }
+    });
+});
+
+updateUI();
+</script>
 
 </body>
 </html>
+
