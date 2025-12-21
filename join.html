@@ -18,29 +18,74 @@
             color: white; 
             margin: 0; padding: 0; overflow-x: hidden;
         }
+        header { padding: 15px 8%; display:flex; justify-content:space-between; align-items:center; background-color:#0b1120; border-bottom:1px solid #1f2937; position: relative; }
 
-        /* --- الهيدر (موحد 100% مع باقي الصفحات) --- */
-         header { 
-            padding: 15px 8%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: #0b1120;
-            border-bottom: 1px solid #1f2937;
+        
+
+        .logo-img{height:150px}
+
+        nav ul{
+            list-style:none;
+            display:flex;
+            gap:10px;
+            margin:0;
+            padding:0;
         }
-        .logo-img { height: 150px; }
-        nav ul { list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; }
-        nav ul li a { 
-            color: white; text-decoration: none; font-weight: 600; font-size: 14px; 
-            padding: 8px 15px; border-radius: 8px; transition: 0.3s;
-            display: inline-block;
+        nav a{
+            color:white;
+            text-decoration:none;
+            padding:8px 15px;
+            border-radius:8px;
+            font-weight:600;
         }
-        nav ul li a:hover { background-color: #1f2937; transform: translateY(-3px); }
-        .active-link { background-color: #1f2937; border-bottom: 2px solid white; }
+        nav a:hover{background:#1f2937}
+        .active-link{background:#1f2937}
+
+        /* أيقونة الحساب */
+        #account-icon{
+            position:absolute;
+            left:20px;
+            top:20px;
+            font-size:28px;
+            cursor:pointer;
+        }
+        #account-menu{
+            display:none;
+            position:absolute;
+            left:0;
+            top:60px;
+            background:#111827;
+            border:1px solid #334155;
+            border-radius:15px;
+            width:200px;
+            padding:15px;
+            text-align:right;
+            z-index:1000;
+        }
+        #account-menu p{margin:10px 0;font-weight:bold;}
+        #account-menu input{
+            width:100%;
+            padding:8px;
+            margin-top:5px;
+            margin-bottom:10px;
+            border-radius:8px;
+            border:none;
+        }
+        #account-menu button{
+            width:100%;
+            padding:10px;
+            margin-top:10px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+        #account-menu button.login-btn{background:#22c55e; color:white;}
+        #account-menu button.logout-btn{background:#ef4444; color:white; display:none;}
 
         /* --- محتوى الشرح (تم توحيد المقاسات هنا) --- */
         .main-content {
-            max-width: 1200px; /* نفس عرض الكروت في باقي الصفحات */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 40px 8%;
         }
@@ -62,7 +107,7 @@
             border-radius: 15px;
             padding: 25px;
             width: 100%;
-            max-width: 600px; /* جعل عرض البطاقة مريح للعين وموحد */
+            max-width: 600px;
             display: flex;
             gap: 20px;
             transition: 0.3s;
@@ -98,6 +143,16 @@
                 <li><a href="quizzes.html">الاختبارات</a></li>
             </ul>
         </nav>
+        
+
+        <!-- أيقونة الحساب -->
+        <div id="account-icon"><i class="fas fa-user-circle"></i></div>
+        <div id="account-menu">
+            <p id="user-name">غير مسجل</p>
+            <input type="text" id="username" placeholder="أدخل اسمك">
+            <button class="login-btn" onclick="login()">تسجيل الدخول</button>
+            <button class="logout-btn" onclick="logout()">تغيير الحساب</button>
+        </div>
     </header>
 
     <div class="main-content">
@@ -137,6 +192,45 @@
     <footer style="text-align: center; padding: 40px; color: #4b5563;">
         <p>جميع الحقوق محفوظة لـ HEEMO &copy; 2025</p>
     </footer>
+
+    <script>
+        let currentUser = localStorage.getItem("heemoUser") || "";
+        const unlocked = JSON.parse(localStorage.getItem("unlocked")) || ["html1"];
+
+        function login(){
+            let username=document.getElementById("username").value.trim();
+            if(username===""){alert("الرجاء إدخال اسمك"); return;}
+            currentUser=username;
+            localStorage.setItem("heemoUser",username);
+            document.getElementById("user-name").innerText=username;
+            document.getElementById("username").style.display="none";
+            document.querySelector(".login-btn").style.display="none";
+            document.querySelector(".logout-btn").style.display="block";
+        }
+
+        function logout(){
+            currentUser="";
+            localStorage.removeItem("heemoUser");
+            document.getElementById("user-name").innerText="غير مسجل";
+            document.getElementById("username").style.display="block";
+            document.querySelector(".login-btn").style.display="block";
+            document.querySelector(".logout-btn").style.display="none";
+        }
+
+        const accountIcon=document.getElementById("account-icon");
+        const accountMenu=document.getElementById("account-menu");
+        accountIcon.addEventListener("click",()=>{
+            accountMenu.style.display = accountMenu.style.display==='block'?'none':'block';
+        });
+
+        // عرض اسم المستخدم عند تحميل الصفحة إذا كان مسجلاً
+        if(currentUser){
+            document.getElementById("user-name").innerText=currentUser;
+            document.getElementById("username").style.display="none";
+            document.querySelector(".login-btn").style.display="none";
+            document.querySelector(".logout-btn").style.display="block";
+        }
+    </script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -9,7 +9,7 @@
 <style>
 body{font-family:'Tajawal',sans-serif;background:#0b1120;color:#fff;margin:0}
 header{padding:15px 8%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f2937;position:relative}
-.logo-img{height:110px}
+.logo-img{height:150px}
 nav ul{list-style:none;display:flex;gap:10px;padding:0}
 nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 .active-link{background:#1f2937}
@@ -18,7 +18,8 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 #account-icon{position:absolute;left:20px;top:20px;font-size:22px;cursor:pointer}
 #account-menu{display:none;position:absolute;left:0;top:40px;background:#111827;border:1px solid #334155;border-radius:15px;width:200px;padding:15px;text-align:right;z-index:1000}
 #account-menu p{margin:10px 0;font-weight:bold}
-#account-menu button{width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;background:#22c55e;color:white;font-weight:bold}
+#account-menu input{width:100%;padding:8px;margin:5px 0;border-radius:8px;border:none}
+#account-menu button{width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;font-weight:bold}
 #account-menu button:hover{filter:brightness(1.2)}
 
 /* المحتوى */
@@ -41,6 +42,11 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 #certificate-container{display:none;text-align:center;padding:40px;background:#111827;border:2px solid #fff;border-radius:20px;margin:40px auto;max-width:600px}
 #certificate-container h2{color:#22c55e;margin-bottom:20px}
 #certificate-container p{margin:15px 0;font-size:18px}
+
+/* شهاداتك */
+#my-certificates-container{display:none;text-align:center;padding:40px;background:#111827;border:2px solid #fff;border-radius:20px;margin:40px auto;max-width:600px}
+#my-certificates-container h2{color:#22c55e;margin-bottom:20px}
+#my-certificates-container p{margin:10px 0;font-size:16px;color:#fff}
 </style>
 </head>
 <body>
@@ -62,6 +68,7 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 <input type="text" id="username" placeholder="أدخل اسمك">
 <button onclick="login()">تسجيل الدخول</button>
 <button onclick="logout()" style="display:none;background:#ef4444;margin-top:10px;">تغيير الحساب</button>
+<button id="my-certificates-btn" style="display:none;margin-top:10px;background:#2563eb;color:white;font-weight:bold;">شهاداتك</button>
 </div>
 </header>
 
@@ -79,7 +86,7 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 
 <h2 class="section-title" style="color:#264de4">اختبارات CSS</h2>
 <div class="card-container">
-<div class="card locked" data-quiz="css1"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 1</h3><button class="btn-start">مقفل</button></div>
+<div class="card" data-quiz="css1"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 1</h3><button class="btn-start" onclick="startQuiz('css1')">ابدأ</button></div>
 <div class="card locked" data-quiz="css2"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 2</h3><button class="btn-start">مقفل</button></div>
 <div class="card locked" data-quiz="css3"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 3</h3><button class="btn-start">مقفل</button></div>
 <div class="card locked" data-quiz="css4"><i class="fab fa-css3-alt" style="color:#264de4"></i><h3>CSS 4</h3><button class="btn-start">مقفل</button></div>
@@ -87,6 +94,7 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 </div>
 </div>
 
+<!-- Quiz -->
 <div id="quiz-container">
 <div id="timer-bar"></div>
 <h2 id="question-text"></h2>
@@ -95,12 +103,14 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 <button id="quit-btn" onclick="quitQuiz()">الرجوع</button>
 </div>
 
+<!-- نتيجة الاختبار -->
 <div id="result-container">
 <h2>انتهى الاختبار 🎉</h2>
 <p id="score-text"></p>
 <button class="btn-start" onclick="location.reload()">رجوع للاختبارات</button>
 </div>
 
+<!-- شهادة واحدة -->
 <div id="certificate-container">
 <h2>🏆 شهادة شكر 🏆</h2>
 <p id="cert-lang"></p>
@@ -109,10 +119,17 @@ nav a{color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px}
 <button class="btn-start" onclick="location.reload()">رجوع للاختبارات</button>
 </div>
 
+<!-- شهاداتك -->
+<div id="my-certificates-container">
+<h2>🏆 شهاداتك 🏆</h2>
+<div id="certificates-list"></div>
+<button class="btn-start" onclick="closeCertificates()">رجوع</button>
+</div>
+
 <script>
 // ترتيب الاختبارات
 const order=["html1","html2","html3","html4","html5","css1","css2","css3","css4","css5"];
-let unlocked=JSON.parse(localStorage.getItem("unlocked"))||["html1"];
+let unlocked=JSON.parse(localStorage.getItem("unlocked"))||["html1","css1"];
 let currentUser=localStorage.getItem("heemoUser")||"";
 
 // تخزين الدرجات لكل لغة
@@ -133,14 +150,15 @@ card.querySelector("button").onclick=null;
 });
 }
 
+// تسجيل الدخول والخروج
 function login(){
 let username=document.getElementById("username").value.trim();
 if(username===""){alert("الرجاء إدخال اسمك"); return;}
 if(username!==currentUser){
 currentUser=username;
 localStorage.setItem("heemoUser",username);
-localStorage.setItem("unlocked",JSON.stringify(["html1"]));
-unlocked=["html1"];
+localStorage.setItem("unlocked",JSON.stringify(["html1","css1"])); // HTML1 و CSS1 مفتوحين
+unlocked=["html1","css1"];
 grades={html:[],css:[]};
 localStorage.setItem("grades",JSON.stringify(grades));
 updateLocks();
@@ -149,13 +167,14 @@ document.getElementById("user-name").innerText=username;
 document.getElementById("username").style.display="none";
 document.querySelector("#account-menu button[onclick='login()']").style.display="none";
 document.querySelector("#account-menu button[onclick='logout()']").style.display="block";
+document.querySelector("#my-certificates-btn").style.display="block";
 }
 
 function logout(){
 currentUser="";
 localStorage.removeItem("heemoUser");
-localStorage.setItem("unlocked",JSON.stringify(["html1"]));
-unlocked=["html1"];
+localStorage.setItem("unlocked",JSON.stringify(["html1","css1"]));
+unlocked=["html1","css1"];
 grades={html:[],css:[]};
 localStorage.setItem("grades",JSON.stringify(grades));
 updateLocks();
@@ -163,6 +182,7 @@ document.getElementById("user-name").innerText="غير مسجل";
 document.getElementById("username").style.display="block";
 document.querySelector("#account-menu button[onclick='login()']").style.display="block";
 document.querySelector("#account-menu button[onclick='logout()']").style.display="none";
+document.querySelector("#my-certificates-btn").style.display="none";
 }
 
 updateLocks();
@@ -171,6 +191,7 @@ document.getElementById("user-name").innerText=currentUser;
 document.getElementById("username").style.display="none";
 document.querySelector("#account-menu button[onclick='login()']").style.display="none";
 document.querySelector("#account-menu button[onclick='logout()']").style.display="block";
+document.querySelector("#my-certificates-btn").style.display="block";
 }
 
 // Quiz
@@ -270,22 +291,56 @@ tick();
 timerInterval=setInterval(tick,1000);
 }
 
-function showCertificate(lang,scores){
-document.getElementById("result-container").style.display="none";
-document.getElementById("main-content-wrapper").style.display="none";
+// الشهادة بعد HTML5 أو CSS5
+function showCertificate(lang,arr){
 document.getElementById("certificate-container").style.display="block";
+document.getElementById("quiz-container").style.display="none";
+document.getElementById("main-content-wrapper").style.display="none";
+document.getElementById("result-container").style.display="none";
 document.getElementById("cert-lang").innerText=`اللغة: ${lang}`;
 document.getElementById("cert-user").innerText=`المستخدم: ${currentUser}`;
-let avg=Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
-document.getElementById("cert-score").innerText=`متوسط الدرجات: ${avg} %`;
+const avg=Math.round(arr.reduce((a,b)=>a+b,0)/arr.length);
+document.getElementById("cert-score").innerText=`متوسط الدرجة: ${avg} %`;
+}
+
+// شهاداتك
+document.getElementById("my-certificates-btn").addEventListener("click",showMyCertificates);
+function showMyCertificates(){
+document.getElementById("main-content-wrapper").style.display="none";
+document.getElementById("quiz-container").style.display="none";
+document.getElementById("result-container").style.display="none";
+document.getElementById("certificate-container").style.display="none";
+
+const container=document.getElementById("my-certificates-container");
+const list=document.getElementById("certificates-list");
+list.innerHTML="";
+
+const gradesStored=JSON.parse(localStorage.getItem("grades"))||{html:[],css:[]};
+
+if(gradesStored.html.length>=5){
+const avgHtml=Math.round(gradesStored.html.reduce((a,b)=>a+b,0)/gradesStored.html.length);
+list.innerHTML+=`<p>HTML 🟠 متوسط الدرجات: ${avgHtml} %</p>`;
+}else{list.innerHTML+=`<p>HTML 🟠 لم تكمل جميع الاختبارات بعد</p>`;}
+
+if(gradesStored.css.length>=5){
+const avgCss=Math.round(gradesStored.css.reduce((a,b)=>a+b,0)/gradesStored.css.length);
+list.innerHTML+=`<p>CSS 🔵 متوسط الدرجات: ${avgCss} %</p>`;
+}else{list.innerHTML+=`<p>CSS 🔵 لم تكمل جميع الاختبارات بعد</p>`;}
+
+container.style.display="block";
+}
+
+function closeCertificates(){
+document.getElementById("my-certificates-container").style.display="none";
+document.getElementById("main-content-wrapper").style.display="block";
 }
 
 // أيقونة الحساب
-const accountIcon=document.getElementById("account-icon");
-const accountMenu=document.getElementById("account-menu");
-accountIcon.addEventListener("click",()=>{accountMenu.style.display=accountMenu.style.display==='block'?'none':'block';});
+document.getElementById("account-icon").addEventListener("click",()=>{
+const menu=document.getElementById("account-menu");
+menu.style.display=(menu.style.display==="block")?"none":"block";
+});
 </script>
 
 </body>
 </html>
-
